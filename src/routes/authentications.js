@@ -7,6 +7,11 @@ const authMiddleware = require('../middleware/auth');
 
 router.post('/', validate(loginSchema), AuthenticationsController.login);
 router.put('/', validate(refreshTokenSchema), AuthenticationsController.refresh);
-router.delete('/', authMiddleware, AuthenticationsController.logout);
+router.delete(
+  "/",
+  authMiddleware,
+  validate(refreshTokenSchema),
+  AuthenticationsController.logout,
+);
 
 module.exports = router;

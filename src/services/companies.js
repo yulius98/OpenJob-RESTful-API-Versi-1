@@ -1,12 +1,12 @@
 const { nanoid } = require('nanoid');
 const CompaniesRepository = require('../repositories/companies');
-const { ClientError, NotFoundError } = require('../exceptions');
+const { NotFoundError } = require("../exceptions");
 
 const CompaniesService = {
   async create(data) {
     const existingName = await CompaniesRepository.findByName(data.name);
     if (existingName) {
-      throw new ClientError('Company name already exists');
+      return existingName;
     }
 
     const id = `company-${nanoid(16)}`;
@@ -20,7 +20,7 @@ const CompaniesService = {
   async getById(id) {
     const company = await CompaniesRepository.findById(id);
     if (!company) {
-      throw new NotFoundError('Company not found');
+      throw new NotFoundError("Company not found");
     }
     return company;
   },
@@ -28,7 +28,7 @@ const CompaniesService = {
   async update(id, data) {
     const company = await CompaniesRepository.findById(id);
     if (!company) {
-      throw new NotFoundError('Company not found');
+      throw new NotFoundError("Company not found");
     }
     const updated = await CompaniesRepository.update(id, data);
     return updated;
@@ -37,7 +37,7 @@ const CompaniesService = {
   async delete(id) {
     const company = await CompaniesRepository.findById(id);
     if (!company) {
-      throw new NotFoundError('Company not found');
+      throw new NotFoundError("Company not found");
     }
     return CompaniesRepository.delete(id);
   },

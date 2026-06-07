@@ -6,8 +6,8 @@ const ProfileController = {
       const { id: userId } = req.user;
       const user = await ProfileService.getProfile(userId);
       res.json({
-        status: 'success',
-        data: { user },
+        status: "success",
+        data: user,
       });
     } catch (err) {
       next(err);
@@ -19,7 +19,7 @@ const ProfileController = {
       const { id: userId } = req.user;
       const applications = await ProfileService.getApplications(userId);
       res.json({
-        status: 'success',
+        status: "success",
         data: { applications },
       });
     } catch (err) {

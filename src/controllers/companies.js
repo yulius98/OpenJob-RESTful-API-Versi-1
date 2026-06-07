@@ -5,8 +5,8 @@ const CompaniesController = {
     try {
       const company = await CompaniesService.create(req.body);
       res.status(201).json({
-        status: 'success',
-        data: { company },
+        status: "success",
+        data: company,
       });
     } catch (err) {
       next(err);
@@ -17,7 +17,7 @@ const CompaniesController = {
     try {
       const companies = await CompaniesService.getAll();
       res.json({
-        status: 'success',
+        status: "success",
         data: { companies },
       });
     } catch (err) {
@@ -29,8 +29,8 @@ const CompaniesController = {
     try {
       const company = await CompaniesService.getById(req.params.id);
       res.json({
-        status: 'success',
-        data: { company },
+        status: "success",
+        data: company,
       });
     } catch (err) {
       next(err);
@@ -41,8 +41,8 @@ const CompaniesController = {
     try {
       const company = await CompaniesService.update(req.params.id, req.body);
       res.json({
-        status: 'success',
-        data: { company },
+        status: "success",
+        data: company,
       });
     } catch (err) {
       next(err);

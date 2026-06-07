@@ -7,8 +7,8 @@ const BookmarksController = {
       const { jobId } = req.params;
       const bookmark = await BookmarksService.create({ userId, jobId });
       res.status(201).json({
-        status: 'success',
-        data: { bookmark },
+        status: "success",
+        data: bookmark,
       });
     } catch (err) {
       next(err);
@@ -20,7 +20,7 @@ const BookmarksController = {
       const bookmark = await BookmarksService.getById(req.params.id);
       res.json({
         status: 'success',
-        data: { bookmark },
+        data: bookmark,
       });
     } catch (err) {
       next(err);

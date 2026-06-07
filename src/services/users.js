@@ -1,15 +1,17 @@
 const { nanoid } = require('nanoid');
 const bcrypt = require('bcrypt');
-const UsersRepository = require('../repositories/users');
-const { ClientError, NotFoundError } = require('../exceptions');
+const UsersRepository = require("../repositories/users");
+const { NotFoundError } = require("../exceptions");
 
 const UsersService = {
   async register({ name, email, password, role = 'user' }) {
     const existingEmail = await UsersRepository.findByEmail(email);
     if (existingEmail) {
-      throw new ClientError('Email already registered');
+      delete existingEmail.password;
+      return existingEmail;
     }
 
+    
     const id = `user-${nanoid(16)}`;
     const hashedPassword = await bcrypt.hash(password, 10);
 

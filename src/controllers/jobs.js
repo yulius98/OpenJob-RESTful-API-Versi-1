@@ -6,7 +6,7 @@ const JobsController = {
       const job = await JobsService.create(req.body);
       res.status(201).json({
         status: 'success',
-        data: { job },
+        data: job,
       });
     } catch (err) {
       next(err);
@@ -31,7 +31,7 @@ const JobsController = {
       const job = await JobsService.getById(req.params.id);
       res.json({
         status: 'success',
-        data: { job },
+        data: job,
       });
     } catch (err) {
       next(err);
