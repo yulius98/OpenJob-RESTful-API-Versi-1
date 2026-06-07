@@ -42,7 +42,7 @@ const CompaniesController = {
       const company = await CompaniesService.update(req.params.id, req.body);
       res.json({
         status: "success",
-        data: company,
+        message: "Company updated successfully",
       });
     } catch (err) {
       next(err);

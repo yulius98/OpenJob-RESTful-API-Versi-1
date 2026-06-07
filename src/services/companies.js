@@ -1,12 +1,12 @@
 const { nanoid } = require('nanoid');
 const CompaniesRepository = require('../repositories/companies');
-const { NotFoundError } = require("../exceptions");
+const { NotFoundError, ClientError } = require("../exceptions");
 
 const CompaniesService = {
   async create(data) {
     const existingName = await CompaniesRepository.findByName(data.name);
     if (existingName) {
-      return existingName;
+      throw new ClientError("Company name already exists");
     }
 
     const id = `company-${nanoid(16)}`;

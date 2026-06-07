@@ -1,5 +1,3 @@
-const { Client } = require("pg");
-
 class ClientError extends Error {
   constructor(message, statusCode = 400) {
     super(message);
@@ -31,7 +29,7 @@ class NotFoundError extends ClientError {
 
 class ConflictError extends ClientError {
   constructor(message) {
-    super(message, 201);
+    super(message, 409);
     this.name = "ConflictError";
   }
 }
