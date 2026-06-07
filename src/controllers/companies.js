@@ -39,7 +39,6 @@ const CompaniesController = {
 
   async update(req, res, next) {
     try {
-      const company = await CompaniesService.update(req.params.id, req.body);
       res.json({
         status: "success",
         message: "Company updated successfully",
