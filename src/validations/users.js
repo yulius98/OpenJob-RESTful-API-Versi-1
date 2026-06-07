@@ -13,7 +13,7 @@ const loginSchema = Joi.object({
 });
 
 const refreshTokenSchema = Joi.object({
-  refresh_token: Joi.string().required(),
+  refreshToken: Joi.string().required(),
 });
 
 module.exports = { registerUserSchema, loginSchema, refreshTokenSchema };
