@@ -1,56 +1,63 @@
 exports.up = (pgm) => {
-  pgm.createTable('jobs', {
+  pgm.createTable("jobs", {
     id: {
-      type: 'VARCHAR(50)',
+      type: "VARCHAR(50)",
       primaryKey: true,
     },
     company_id: {
-      type: 'VARCHAR(50)',
+      type: "VARCHAR(50)",
       notNull: true,
-      references: 'companies(id)',
-      onDelete: 'CASCADE',
+      references: "companies(id)",
+      onDelete: "CASCADE",
     },
     category_id: {
-      type: 'VARCHAR(50)',
-      references: 'categories(id)',
-      onDelete: 'SET NULL',
+      type: "VARCHAR(50)",
+      references: "categories(id)",
+      onDelete: "SET NULL",
     },
     title: {
-      type: 'VARCHAR(255)',
+      type: "VARCHAR(255)",
       notNull: true,
     },
     description: {
-      type: 'TEXT',
+      type: "TEXT",
     },
     requirements: {
-      type: 'TEXT',
+      type: "TEXT",
+    },
+    job_type: {
+      type: "TEXT",
+    },
+    experience_level: {
+      type: "TEXT",
+    },
+    location_type: {
+      type: "TEXT",
+    },
+    location_city: {
+      type: "TEXT",
     },
     salary_min: {
-      type: 'NUMERIC',
+      type: "NUMERIC",
     },
     salary_max: {
-      type: 'NUMERIC',
+      type: "NUMERIC",
     },
-    location: {
-      type: 'VARCHAR(255)',
+    is_salary_visible: {
+      type: "BOOLEAN",
     },
-    type: {
-      type: 'VARCHAR(50)',
-    },
-    is_active: {
-      type: 'BOOLEAN',
-      notNull: true,
-      default: true,
+    status: {
+      type: "TEXT",
     },
     created_at: {
-      type: 'TIMESTAMP',
+      type: "TIMESTAMP",
       notNull: true,
-      default: pgm.func('NOW()'),
+      default: pgm.func("NOW()"),
     },
     updated_at: {
-      type: 'TIMESTAMP',
+      type: "TIMESTAMP",
       notNull: true,
-      default: pgm.func('NOW()'),
+      default: pgm.func("NOW()"),
     },
   });
 };

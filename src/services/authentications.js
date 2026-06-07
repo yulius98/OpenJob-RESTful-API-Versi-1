@@ -30,14 +30,14 @@ const AuthenticationsService = {
   async refresh({ refreshToken }) {
     const storedToken = await AuthenticationsRepository.find(refreshToken);
     if (!storedToken) {
-      throw new AuthenticationError('Refresh token not found');
+      throw new ClientError('Refresh token not found');
     }
 
     let payload;
     try {
       payload = verifyRefreshToken(refreshToken);
     } catch {
-      throw new AuthenticationError('Invalid refresh token');
+      throw new ClientError('Invalid refresh token');
     }
 
     const accessToken = generateAccessToken({ id: payload.id });

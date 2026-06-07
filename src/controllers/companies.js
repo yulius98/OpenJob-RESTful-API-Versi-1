@@ -43,6 +43,7 @@ const CompaniesController = {
       res.json({
         status: "success",
         data: company,
+        message: "Company update success",
       });
     } catch (err) {
       next(err);

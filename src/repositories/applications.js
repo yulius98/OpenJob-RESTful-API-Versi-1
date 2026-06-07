@@ -36,7 +36,7 @@ const ApplicationsRepository = {
 
   async findByUser(userId) {
     const result = await pool.query(
-      `SELECT a.*, j.title as job_title, c.name as company_name, j.location as job_location
+      `SELECT a.*, j.title as job_title, c.name as company_name, j.location_city as job_location
        FROM applications a
        LEFT JOIN jobs j ON a.job_id = j.id
        LEFT JOIN companies c ON j.company_id = c.id

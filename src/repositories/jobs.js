@@ -1,12 +1,40 @@
 const pool = require('../config/database');
 
 const JobsRepository = {
-  async create({ id, company_id, category_id, title, description, requirements, salary_min, salary_max, location, type, is_active }) {
+  async create({
+    id,
+    company_id,
+    category_id,
+    title,
+    description,
+    job_type,
+    experience_level,
+    location_type,
+    location_city,
+    salary_min,
+    salary_max,
+    is_salary_visible,
+    status,
+  }) {
     const result = await pool.query(
-      `INSERT INTO jobs (id, company_id, category_id, title, description, requirements, salary_min, salary_max, location, type, is_active)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
-       RETURNING id, company_id, category_id, title, description, requirements, salary_min, salary_max, location, type, is_active, created_at, updated_at`,
-      [id, company_id, category_id || null, title, description || null, requirements || null, salary_min || null, salary_max || null, location || null, type || null, is_active !== undefined ? is_active : true]
+      `INSERT INTO jobs (id, company_id, category_id, title, description, salary_min, salary_max, job_type, experience_level, location_type, location_city, is_salary_visible, status)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13)
+       RETURNING *`,
+      [
+        id,
+        company_id,
+        category_id || null,
+        title,
+        description || null,
+        salary_min || null,
+        salary_max || null,
+        job_type || null,
+        experience_level || null,
+        location_type || null,
+        location_city || null,
+        is_salary_visible ?? null,
+        status || null,
+      ],
     );
     return result.rows[0];
   },
@@ -35,10 +63,10 @@ const JobsRepository = {
     }
 
     if (conditions.length > 0) {
-      query += ' WHERE ' + conditions.join(' AND ');
+      query += " WHERE " + conditions.join(" AND ");
     }
 
-    query += ' ORDER BY j.created_at DESC';
+    query += " ORDER BY j.created_at DESC";
 
     const result = await pool.query(query, values);
     return result.rows;
@@ -51,7 +79,7 @@ const JobsRepository = {
        LEFT JOIN companies c ON j.company_id = c.id
        LEFT JOIN categories cat ON j.category_id = cat.id
        WHERE j.id = $1`,
-      [id]
+      [id],
     );
     return result.rows[0] || null;
   },
@@ -63,7 +91,7 @@ const JobsRepository = {
        LEFT JOIN companies c ON j.company_id = c.id
        LEFT JOIN categories cat ON j.category_id = cat.id
        WHERE j.company_id = $1 ORDER BY j.created_at DESC`,
-      [companyId]
+      [companyId],
     );
     return result.rows;
   },
@@ -75,7 +103,7 @@ const JobsRepository = {
        LEFT JOIN companies c ON j.company_id = c.id
        LEFT JOIN categories cat ON j.category_id = cat.id
        WHERE j.category_id = $1 ORDER BY j.created_at DESC`,
-      [categoryId]
+      [categoryId],
     );
     return result.rows;
   },
@@ -95,18 +123,21 @@ const JobsRepository = {
 
     if (fields.length === 0) return null;
 
-    fields.push('updated_at = NOW()');
+    fields.push("updated_at = NOW()");
     values.push(id);
 
     const result = await pool.query(
-      `UPDATE jobs SET ${fields.join(', ')} WHERE id = $${index} RETURNING id, company_id, category_id, title, description, requirements, salary_min, salary_max, location, type, is_active, created_at, updated_at`,
-      values
+      `UPDATE jobs SET ${fields.join(", ")} WHERE id = $${index} RETURNING *`,
+      values,
     );
     return result.rows[0] || null;
   },
 
   async delete(id) {
-    const result = await pool.query('DELETE FROM jobs WHERE id = $1 RETURNING id', [id]);
+    const result = await pool.query(
+      "DELETE FROM jobs WHERE id = $1 RETURNING id",
+      [id],
+    );
     return result.rows[0] || null;
   },
 };
