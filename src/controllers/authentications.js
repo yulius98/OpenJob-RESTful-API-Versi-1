@@ -21,7 +21,7 @@ const AuthenticationsController = {
   async refresh(req, res, next) {
     try {
       const { accessToken } = await AuthenticationsService.refresh({
-        refreshToken: req.body.refresh_token,
+        refreshToken: req.body.refreshToken,
       });
       res.json({
         status: "success",
@@ -37,7 +37,7 @@ const AuthenticationsController = {
   async logout(req, res, next) {
     try {
       await AuthenticationsService.logout({
-        refreshToken: req.body.refresh_token,
+        refreshToken: req.body.refreshToken,
       });
       res.json({
         status: "success",
