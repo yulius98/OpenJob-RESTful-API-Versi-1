@@ -8,7 +8,7 @@ const ApplicationsController = {
       const application = await ApplicationsService.create({ userId, jobId: job_id, cover_letter });
       res.status(201).json({
         status: 'success',
-        data: { application },
+        data: application,
       });
     } catch (err) {
       next(err);
@@ -32,7 +32,7 @@ const ApplicationsController = {
       const application = await ApplicationsService.getById(req.params.id);
       res.json({
         status: 'success',
-        data: { application },
+        data: application,
       });
     } catch (err) {
       next(err);

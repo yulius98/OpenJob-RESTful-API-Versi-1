@@ -5,8 +5,8 @@ const CategoriesController = {
     try {
       const category = await CategoriesService.create(req.body);
       res.status(201).json({
-        status: 'success',
-        data: { category },
+        status: "success",
+        data: category,
       });
     } catch (err) {
       next(err);
@@ -29,8 +29,8 @@ const CategoriesController = {
     try {
       const category = await CategoriesService.getById(req.params.id);
       res.json({
-        status: 'success',
-        data: { category },
+        status: "success",
+        data: category,
       });
     } catch (err) {
       next(err);
