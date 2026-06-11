@@ -11,6 +11,7 @@ exports.up = (pgm) => {
   });
 };
 
+
 exports.down = (pgm) => {
   pgm.renameColumn('users', 'name', 'username');
   pgm.addConstraint('users', 'users_username_key', { unique: ['username'] });
@@ -22,3 +23,4 @@ exports.down = (pgm) => {
   });
   pgm.dropColumn('users', 'role');
 };
+

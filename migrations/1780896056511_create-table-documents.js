@@ -1,33 +1,27 @@
 exports.up = (pgm) => {
-  pgm.createTable('users', {
+  pgm.createTable('documents', {
     id: {
       type: 'VARCHAR(50)',
       primaryKey: true,
     },
-    username: {
-      type: 'VARCHAR(100)',
+    user_id: {
+      type: 'VARCHAR(50)',
       notNull: true,
-      unique: true,
+      references: 'users(id)',
+      onDelete: 'CASCADE',
     },
-    email: {
-      type: 'VARCHAR(100)',
-      notNull: true,
-      unique: true,
-    },
-    password: {
+    name: {
       type: 'VARCHAR(255)',
       notNull: true,
     },
-    full_name: {
+    file_path: {
       type: 'VARCHAR(255)',
       notNull: true,
+    },
+    type: {
+      type: 'VARCHAR(50)',
     },
     created_at: {
-      type: 'TIMESTAMP',
-      notNull: true,
-      default: pgm.func('NOW()'),
-    },
-    updated_at: {
       type: 'TIMESTAMP',
       notNull: true,
       default: pgm.func('NOW()'),
@@ -36,5 +30,6 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable('users');
+  pgm.dropTable('documents');
 };
+

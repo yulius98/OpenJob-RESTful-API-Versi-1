@@ -1,16 +1,26 @@
 exports.up = (pgm) => {
-  pgm.createTable('categories', {
+  pgm.createTable('users', {
     id: {
       type: 'VARCHAR(50)',
       primaryKey: true,
     },
-    name: {
-      type: 'VARCHAR(255)',
+    username: {
+      type: 'VARCHAR(100)',
       notNull: true,
       unique: true,
     },
-    description: {
-      type: 'TEXT',
+    email: {
+      type: 'VARCHAR(100)',
+      notNull: true,
+      unique: true,
+    },
+    password: {
+      type: 'VARCHAR(255)',
+      notNull: true,
+    },
+    full_name: {
+      type: 'VARCHAR(255)',
+      notNull: true,
     },
     created_at: {
       type: 'TIMESTAMP',
@@ -26,5 +36,6 @@ exports.up = (pgm) => {
 };
 
 exports.down = (pgm) => {
-  pgm.dropTable('categories');
+  pgm.dropTable('users');
 };
+
